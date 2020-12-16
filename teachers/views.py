@@ -10,12 +10,10 @@ def teachers_list_view(request):
 
     if request.is_ajax and request.method =='POST':
         form = TeacherCreationForm(request.POST, request.FILES)
-        print(form.is_valid())
-        
         if form.is_valid():
             instance = form.save()
             ser_instance = serializers.serialize('json', [instance,])
-            return JsonResponse({'instance': ser_instance}, status=200)
+            return JsonResponse({'instance': ser_instance, 'teacherid': instance.id}, status=200)
         else:
             return JsonResponse({'error': form.errors}, status=400)
 
