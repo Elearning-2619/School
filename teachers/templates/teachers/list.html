@@ -3,9 +3,17 @@
 {% block title %}Teachers list{% endblock title %}
 
 {% block content %}
-    <h1>Students list</h1>
-    <hr>
-    <table class="table table-striped">
+    <h1 class="p-3">Teachers data</h1>
+    <hr>    
+    <h3 class="p-3">Add new teacher</h3>
+    <form action="." method="POST" id="teacher-creation-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-success" value="Add Teacher">
+    </form>
+    <br>
+    <hr><br>
+    <table class="table table-striped" id="teachers-data">
         <thead>
             <th>Name</th>
             <th>Gender</th>
@@ -13,9 +21,9 @@
             <th>Grade</th>
         </thead>
         <tbody>
-            {% for teacher in teachers_data %}
+            {% for teacher in teachers_list %}
             <tr>
-                <td>{{ teacher.name }}</td>
+                <td><a href="{% url 'teachers:teachers_detail' teacher.id %}">{{ teacher.name }}</a></td>
                 <td>{{ teacher.gender }}</td>
                 <td>{{ teacher.email }}</td>
                 <td>{{ teacher.grade }}</td>
@@ -24,3 +32,41 @@
         </tbody>
     </table>
 {% endblock content %}
+
+{% block javascript %}
+<script>
+    $('#teacher-creation-form').submit(function(e) {
+        e.preventDefault();
+        const serializedData = $(this).serialize();
+        
+        $.ajax({
+            type: 'POST',
+            url: "/teachers/list/",
+            data: serializedData,
+            success: function(response) {
+                $('#teacher-creation-form').trigger('reset');
+                $('#id_name').focus();
+
+                const instance = JSON.parse(response['instance']);
+                const fields = instance[0]['fields'];
+
+                console.log(fields);
+
+                $('#teachers-data tbody').prepend(
+                    `
+                    <tr>
+                        <td><a href="#">${fields['name']}</a></td>
+                        <td>${fields['gender']}</td>
+                        <td>${fields['email']}</td>
+                        <td>${fields['grade']}</td>
+                    </tr>
+                    `
+                );
+            },
+            error: function(response) {
+                console.log('An error occured.');
+            }
+        })
+    })
+</script>
+{% endblock javascript %}
