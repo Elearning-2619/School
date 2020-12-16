@@ -1,0 +1,12 @@
+{% extends "student_base.html" %}
+
+{% block title %}Admission of Student{% endblock title %}
+
+{% block content %}
+    <h2 class="p-3">Update your data</h2>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-success" value="Add Student">
+    </form>
+{% endblock content %}

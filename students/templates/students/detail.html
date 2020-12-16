@@ -1,0 +1,21 @@
+{% extends "student_base.html" %}
+
+{% block title %}{{ student.name }}' details{% endblock title %}
+
+{% block content %}
+<br><br>
+    <div class="card mx-auto" style="width: 30%;">
+        <div class="card-body">
+            <img src="{{ teacher.image.url }}" class="img-thumbnail" width="98%">
+            <hr>
+            <strong>Name:</strong>&emsp14;&emsp14;{{ student.std_name }} <br>
+            <strong>Roll #:</strong>&emsp14;&emsp14;{{ student.std_rollno }}<br>
+            <strong>Address:</strong>&emsp14;&emsp14;{{ student.address }}<br>
+            <strong>Student Admission:</strong>&emsp14;&emsp14;{{ student.std_entry }}
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'student:students_update' teacher.id %}" class="btn btn-primary btn-sm">Update</a>
+            <a href="{% url 'student:students_delete' teacher.id %}" class="btn btn-danger btn-sm">Delete</a>
+        </div>
+    </div>
+{% endblock content %}
