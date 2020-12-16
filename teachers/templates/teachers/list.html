@@ -1,0 +1,26 @@
+{% extends "teachers_base.html" %}
+
+{% block title %}Teachers list{% endblock title %}
+
+{% block content %}
+    <h1>Students list</h1>
+    <hr>
+    <table class="table table-striped">
+        <thead>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Email</th>
+            <th>Grade</th>
+        </thead>
+        <tbody>
+            {% for teacher in teachers_data %}
+            <tr>
+                <td>{{ teacher.name }}</td>
+                <td>{{ teacher.gender }}</td>
+                <td>{{ teacher.email }}</td>
+                <td>{{ teacher.grade }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

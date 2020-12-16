@@ -13,4 +13,4 @@ class Student(models.Model):
 		ordering = ('-std_name',)
 
 	def __str__(self):
-		return self.std_entry
+		return self.std_name
