@@ -38,7 +38,7 @@
     $('#teacher-creation-form').submit(function(e) {
         e.preventDefault();
         const serializedData = $(this).serialize();
-        
+
         $.ajax({
             type: 'POST',
             url: "/teachers/list/",
@@ -48,14 +48,15 @@
                 $('#id_name').focus();
 
                 const instance = JSON.parse(response['instance']);
+                const teacherid = JSON.parse(response['teacherid']);
                 const fields = instance[0]['fields'];
 
-                console.log(fields);
+                console.log(fields['image']);
 
                 $('#teachers-data tbody').prepend(
                     `
                     <tr>
-                        <td><a href="#">${fields['name']}</a></td>
+                        <td><a href="/teachers/detail/${teacherid}/">${fields['name']}</a></td>
                         <td>${fields['gender']}</td>
                         <td>${fields['email']}</td>
                         <td>${fields['grade']}</td>
