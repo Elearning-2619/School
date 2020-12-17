@@ -7,18 +7,11 @@ from .forms import TeacherCreationForm
 def teachers_list_view(request):
     teachers = Teacher.objects.all()
     form = TeacherCreationForm()
-
     if request.is_ajax and request.method =='POST':
         form = TeacherCreationForm(request.POST, request.FILES)
-        print(form.is_valid())
-        
         if form.is_valid():
-            instance = form.save()
-            ser_instance = serializers.serialize('json', [instance,])
-            return JsonResponse({'instance': ser_instance}, status=200)
-        else:
-            return JsonResponse({'error': form.errors}, status=400)
-
+            form.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return render(request, 'teachers/list.html', {'teachers_list': teachers, 'form': form})
 
 def teachers_detail_view(request, teacher_id):

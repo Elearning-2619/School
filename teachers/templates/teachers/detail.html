@@ -6,7 +6,9 @@
 <br><br>
     <div class="card mx-auto" style="width: 30%;">
         <div class="card-body">
+            {% if teacher.image %}
             <img src="{{ teacher.image.url }}" class="img-thumbnail" width="98%">
+            {% endif %}
             <hr>
             <strong>Name:</strong>&emsp14;&emsp14;{{ teacher.name }} <br>
             <strong>Gender:</strong>&emsp14;&emsp14;{{ teacher.gender }}<br>
